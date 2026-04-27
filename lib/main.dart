@@ -21,7 +21,7 @@ class WhatsAppSederhana extends StatelessWidget {
         appBar: AppBar(
           title: const Text('WhatsApp'),
           backgroundColor: const Color(0xFF075E54),
-          // TabBar diletakkan di bagian 'bottom' dari AppBar
+          // TabBar diletakkan di bagian bawah appbar
           bottom: const TabBar(
             indicatorColor: Colors.white,
             labelColor: Colors.black,
@@ -39,7 +39,7 @@ class WhatsAppSederhana extends StatelessWidget {
             SizedBox(width: 10),
           ],
         ),
-        // TabBarView adalah isi dari masing-masing tab di atas
+        // TabBarView isi dari masing-masing tab
         body: const TabBarView(
           children: [
             HalamanChat(), // Panggil class daftar chat
@@ -64,7 +64,7 @@ class HalamanChat extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListView(
       children: const [
-        // ListTile adalah widget standar untuk baris daftar seperti di WA
+        // ListTile
         ListTile(
           leading: CircleAvatar(
             backgroundColor: Colors.blueGrey,
@@ -74,7 +74,7 @@ class HalamanChat extends StatelessWidget {
           subtitle: Text("Halo, apa kabar?"),
           trailing: Text("15:30"), // Bagian kanan (waktu)
         ),
-        Divider(), // Garis pemisah antar chat
+        Divider(),
         ListTile(
           leading: CircleAvatar(
             backgroundColor: Colors.blueGrey,

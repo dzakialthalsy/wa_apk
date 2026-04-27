@@ -43,8 +43,8 @@ class WhatsAppSederhana extends StatelessWidget {
         body: const TabBarView(
           children: [
             HalamanChat(), // Panggil class daftar chat
-            Center(child: Text("Halaman Status")),
-            Center(child: Text("Halaman Panggilan")),
+            HalamanStatus(),
+            HalamanPanggilan(),
           ],
         ),
         floatingActionButton: FloatingActionButton(
@@ -93,6 +93,65 @@ class HalamanChat extends StatelessWidget {
           title: Text("Andi", style: TextStyle(fontWeight: FontWeight.bold)),
           subtitle: Text("Woke siap!"),
           trailing: Text("10:00"),
+        ),
+      ],
+    );
+  }
+}
+
+class HalamanStatus extends StatelessWidget {
+  const HalamanStatus({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return ListView(
+      children: [
+        ListTile(
+          leading: Stack(
+            children: [
+              CircleAvatar(
+                backgroundColor: Colors.grey[300],
+                child: const Icon(Icons.person, color: Colors.white),
+              ),
+              Positioned(
+                bottom: 0,
+                right: 0,
+                child: Container(
+                  decoration: const BoxDecoration(
+                    color: Colors.green,
+                    shape: BoxShape.circle,
+                  ),
+                  child: const Icon(Icons.add, color: Colors.white, size: 20),
+                ),
+              ),
+            ],
+          ),
+          title: const Text(
+            "Status saya",
+            style: TextStyle(fontWeight: FontWeight.bold),
+          ),
+          subtitle: const Text("Ketuk untuk menambahkan status"),
+        ),
+      ],
+    );
+  }
+}
+
+class HalamanPanggilan extends StatelessWidget {
+  const HalamanPanggilan({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return ListView(
+      children: const [
+        ListTile(
+          leading: CircleAvatar(
+            backgroundColor: Colors.blueGrey,
+            child: Icon(Icons.person, color: Colors.white),
+          ),
+          title: Text("Budi", style: TextStyle(fontWeight: FontWeight.bold)),
+          subtitle: Text("Hari ini, 09:00"),
+          trailing: Icon(Icons.call, color: Colors.green),
         ),
       ],
     );

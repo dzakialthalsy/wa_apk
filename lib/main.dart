@@ -1,137 +1,100 @@
 import 'package:flutter/material.dart';
 
 void main() {
-  runApp(const WhatsAppReplicate());
-}
-
-class WhatsAppReplicate extends StatelessWidget {
-  const WhatsAppReplicate({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
+  runApp(
+    const MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'WhatsApp Replicate',
-      theme: ThemeData(
-        // Menggunakan warna hijau khas WhatsApp
-        primaryColor: const Color(0xFF075E54),
-        colorScheme: ColorScheme.fromSeed(
-          seedColor: const Color(0xFF075E54),
-          secondary: const Color(0xFF25D366),
-        ),
-        useMaterial3: false,
-      ),
-      home: const WhatsAppHome(),
-    );
-  }
+      home: WhatsAppSederhana(),
+    ),
+  );
 }
 
-class WhatsAppHome extends StatefulWidget {
-  const WhatsAppHome({super.key});
-
-  @override
-  State<WhatsAppHome> createState() => _WhatsAppHomeState();
-}
-
-class _WhatsAppHomeState extends State<WhatsAppHome>
-    with SingleTickerProviderStateMixin {
-  late TabController _tabController;
-
-  @override
-  void initState() {
-    super.initState();
-    _tabController = TabController(length: 3, vsync: this, initialIndex: 0);
-  }
+class WhatsAppSederhana extends StatelessWidget {
+  const WhatsAppSederhana({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('WhatsApp'),
-        backgroundColor: const Color(0xFF075E54),
-        elevation: 0.7,
-        bottom: TabBar(
-          controller: _tabController,
-          indicatorColor: Colors.white,
-          tabs: const [
-            Tab(text: "CHATS"),
-            Tab(text: "STATUS"),
-            Tab(text: "CALLS"),
+    // DefaultTabController membungkus seluruh aplikasi agar tab berfungsi otomatis
+    return DefaultTabController(
+      length: 3, // Jumlah tab
+      child: Scaffold(
+        appBar: AppBar(
+          title: const Text('WhatsApp'),
+          backgroundColor: const Color(0xFF075E54),
+          // TabBar diletakkan di bagian 'bottom' dari AppBar
+          bottom: const TabBar(
+            indicatorColor: Colors.white,
+            labelColor: Colors.black,
+            unselectedLabelColor: Colors.black54,
+            tabs: [
+              Tab(text: "CHATS"),
+              Tab(text: "STATUS"),
+              Tab(text: "CALLS"),
+            ],
+          ),
+          actions: const [
+            Icon(Icons.search),
+            SizedBox(width: 10),
+            Icon(Icons.more_vert),
+            SizedBox(width: 10),
           ],
         ),
-        actions: const [
-          Icon(Icons.search),
-          Padding(padding: EdgeInsets.symmetric(horizontal: 5.0)),
-          Icon(Icons.more_vert),
-        ],
-      ),
-      body: TabBarView(
-        controller: _tabController,
-        children: const [
-          ChatScreen(),
-          Center(child: Text("Status Screen")),
-          Center(child: Text("Calls Screen")),
-        ],
-      ),
-      floatingActionButton: FloatingActionButton(
-        backgroundColor: const Color(0xFF25D366),
-        child: const Icon(Icons.message, color: Colors.white),
-        onPressed: () {},
+        // TabBarView adalah isi dari masing-masing tab di atas
+        body: const TabBarView(
+          children: [
+            HalamanChat(), // Panggil class daftar chat
+            Center(child: Text("Halaman Status")),
+            Center(child: Text("Halaman Panggilan")),
+          ],
+        ),
+        floatingActionButton: FloatingActionButton(
+          backgroundColor: const Color(0xFF25D366),
+          child: const Icon(Icons.message, color: Colors.white),
+          onPressed: () {},
+        ),
       ),
     );
   }
 }
 
-class ChatScreen extends StatelessWidget {
-  const ChatScreen({super.key});
+class HalamanChat extends StatelessWidget {
+  const HalamanChat({super.key});
 
   @override
   Widget build(BuildContext context) {
-    // Data contoh untuk daftar chat
-    final List<Map<String, String>> dummyData = [
-      {"name": "Budi", "message": "Halo, apa kabar?", "time": "15:30"},
-      {
-        "name": "Siti",
-        "message": "Jadi kerja kelompok nanti?",
-        "time": "14:15",
-      },
-      {"name": "Andi", "message": "Woke siap!", "time": "10:00"},
-    ];
-
-    return ListView.builder(
-      itemCount: dummyData.length,
-      itemBuilder: (context, i) => Column(
-        children: [
-          const Divider(height: 10.0),
-          ListTile(
-            leading: const CircleAvatar(
-              foregroundColor: Colors.grey,
-              backgroundColor: Colors.blueGrey,
-              child: Icon(Icons.person, color: Colors.white),
-            ),
-            title: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  dummyData[i]['name']!,
-                  style: const TextStyle(fontWeight: FontWeight.bold),
-                ),
-                Text(
-                  dummyData[i]['time']!,
-                  style: const TextStyle(color: Colors.grey, fontSize: 14.0),
-                ),
-              ],
-            ),
-            subtitle: Container(
-              padding: const EdgeInsets.only(top: 5.0),
-              child: Text(
-                dummyData[i]['message']!,
-                style: const TextStyle(color: Colors.grey, fontSize: 15.0),
-              ),
-            ),
+    return ListView(
+      children: const [
+        // ListTile adalah widget standar untuk baris daftar seperti di WA
+        ListTile(
+          leading: CircleAvatar(
+            backgroundColor: Colors.blueGrey,
+            child: Icon(Icons.person, color: Colors.white),
           ),
-        ],
-      ),
+          title: Text("Budi", style: TextStyle(fontWeight: FontWeight.bold)),
+          subtitle: Text("Halo, apa kabar?"),
+          trailing: Text("15:30"), // Bagian kanan (waktu)
+        ),
+        Divider(), // Garis pemisah antar chat
+        ListTile(
+          leading: CircleAvatar(
+            backgroundColor: Colors.blueGrey,
+            child: Icon(Icons.person, color: Colors.white),
+          ),
+          title: Text("Siti", style: TextStyle(fontWeight: FontWeight.bold)),
+          subtitle: Text("Jadi kerja kelompok nanti?"),
+          trailing: Text("14:15"),
+        ),
+        Divider(),
+        ListTile(
+          leading: CircleAvatar(
+            backgroundColor: Colors.blueGrey,
+            child: Icon(Icons.person, color: Colors.white),
+          ),
+          title: Text("Andi", style: TextStyle(fontWeight: FontWeight.bold)),
+          subtitle: Text("Woke siap!"),
+          trailing: Text("10:00"),
+        ),
+      ],
     );
   }
 }

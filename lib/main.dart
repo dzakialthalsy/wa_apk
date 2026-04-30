@@ -72,7 +72,7 @@ class HalamanChat extends StatelessWidget {
           ),
           title: Text("Budi", style: TextStyle(fontWeight: FontWeight.bold)),
           subtitle: Text("Halo, apa kabar?"),
-          trailing: Text("15:30"), // Bagian kanan (waktu)
+          trailing: Text("15:30"), // (waktu)
         ),
         Divider(),
         ListTile(
